@@ -20,7 +20,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "What to do Today",
       theme: ThemeData(
-        primaryColor: Colors.brown[600],
+        primaryColor: Colors.transparent,
         secondaryHeaderColor: Colors.brown[200],
       ),
       home: Scaffold(
