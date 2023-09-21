@@ -1,4 +1,7 @@
-// ignore: file_names
+// ignore_for_file: file_names
+
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:wtdt/DayDetails.dart';
 import 'package:wtdt/utils/Month.dart';
@@ -30,9 +33,13 @@ class _HabbitDayButtonState extends State<HabbitDayButton> {
   @override
   Widget build(BuildContext context) {
     double strokeBorder = 0;
+    int intensityColor =  (Random().nextInt(8) + 1) * 100;
+    // 800 600 400 200
     if(month.numberOfMonth == today.month && day == today.day ){
         strokeBorder = 3.0;
     }
+
+    
 
     return SizedBox(
       width: 40,
@@ -45,7 +52,7 @@ class _HabbitDayButtonState extends State<HabbitDayButton> {
         ));
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.brown[700],
+        backgroundColor: Colors.brown[intensityColor],
         side: BorderSide(color: Colors.white, width: strokeBorder),
         
         // padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
