@@ -1,6 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:wtdt/Day_Details.dart';
+import 'package:wtdt/DayDetails.dart';
 import 'package:wtdt/utils/Month.dart';
 
 // ignore: use_key_in_widget_constructors
