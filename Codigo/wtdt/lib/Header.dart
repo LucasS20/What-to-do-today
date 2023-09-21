@@ -1,8 +1,6 @@
 // ignore_for_file: file_names
 
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class Header extends StatelessWidget{
   const Header({super.key, required this.firstPart , required this.secondtPart});
@@ -22,14 +20,14 @@ class Header extends StatelessWidget{
           style: const TextStyle(
             fontSize: 50,
             fontWeight: FontWeight.bold,
-            // color: Color()
+            color: Colors.black45
           ),
         ),
         Text(secondtPart,
           style: const TextStyle(
             fontSize: 60,
             fontWeight: FontWeight.bold,
-            color: Colors.green
+            color: Colors.brown
           ),
         ),
         ],
