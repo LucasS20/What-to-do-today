@@ -13,7 +13,7 @@ class DayDetails extends StatelessWidget{
   
   @override
   Widget build(BuildContext context){
-    String mes = month.name;
+    String mes = month.getNameMonth();
     return  Scaffold(
         backgroundColor: Colors.brown[100],
         appBar: AppBar(

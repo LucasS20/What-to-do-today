@@ -11,6 +11,8 @@ class HabbitDayButton extends StatefulWidget {
   final int day;
   final Month month;
 
+  
+
   @override
   // ignore: library_private_types_in_public_api, no_logic_in_create_state
   _HabbitDayButtonState createState() => _HabbitDayButtonState(day: day, month: month);
@@ -24,8 +26,14 @@ class _HabbitDayButtonState extends State<HabbitDayButton> {
   final Month month;
   final DateTime today = DateTime.now();
 
+
   @override
   Widget build(BuildContext context) {
+    double strokeBorder = 0;
+    if(month.numberOfMonth == today.month && day == today.day ){
+        strokeBorder = 3.0;
+    }
+
     return SizedBox(
       width: 40,
       height: 40,
@@ -37,7 +45,9 @@ class _HabbitDayButtonState extends State<HabbitDayButton> {
         ));
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.brown[500],
+        backgroundColor: Colors.brown[700],
+        side: BorderSide(color: Colors.white, width: strokeBorder),
+        
         // padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
       ), 
       child: Text(_label),

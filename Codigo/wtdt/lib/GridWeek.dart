@@ -23,8 +23,8 @@ class GridWeek extends StatelessWidget{
           children: List.generate(week.length, (index) {
             return Text(week[index],
             style: const TextStyle(
-              color: Colors.blueGrey,
-              fontSize: 20,
+              color: Colors.black26,
+              fontSize: 22,
               fontWeight: FontWeight.w400
             ));
           })
