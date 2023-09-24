@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wtdt/Header.dart';
-import 'package:wtdt/Homepage.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:wtdt/pages/AddTask.dart';
+import 'package:wtdt/components/Header.dart';
+import 'package:wtdt/pages/Homepage.dart';
 
 
 void main() {
@@ -18,6 +20,11 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: const [Locale('pt', 'BR')],
       title: "What to do Today",
       theme: ThemeData(
         primaryColor: Colors.transparent,
@@ -33,7 +40,7 @@ class MainApp extends StatelessWidget {
         ),
         body: const Center(
           child: HomePage(),
-          // child: GridWeek(),
+          // child: AddTask(),
         ),
         bottomNavigationBar: BottomAppBar(
           color: Colors.brown[800],
