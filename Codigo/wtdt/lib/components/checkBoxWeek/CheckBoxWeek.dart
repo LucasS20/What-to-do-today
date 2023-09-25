@@ -18,17 +18,19 @@ class _CheckboxWeekState extends State<CheckboxWeek> {
     
 
     return const Center(
-      
-      child:  Column(
-        children: [
-          CheckboxDay(label: "Domingo"),
-          CheckboxDay(label: "Segunda-feira"),
-          CheckboxDay(label: "Terça-Feira"),
-          CheckboxDay(label: "Quarta-Feira"),
-          CheckboxDay(label: "Quinta-feira"),
-          CheckboxDay(label: "Sexta-feira"),
-          CheckboxDay(label: "Sábado"),
-        ],
+      child:  SizedBox(
+        width: 180,
+        child: Column(
+          children: [
+            CheckboxDay(label: "Domingo"),
+            CheckboxDay(label: "Segunda-feira"),
+            CheckboxDay(label: "Terça-Feira"),
+            CheckboxDay(label: "Quarta-Feira"),
+            CheckboxDay(label: "Quinta-feira"),
+            CheckboxDay(label: "Sexta-feira"),
+            CheckboxDay(label: "Sábado"),
+          ],
+        ),
       ),
     );
   }
