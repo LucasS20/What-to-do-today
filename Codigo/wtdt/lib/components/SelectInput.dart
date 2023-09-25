@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-const List<String> options = <String>["Nenhuma",'1 semana', '2 semanas', '1 mês', '3 meses'];
+const List<String> options = <String>["uma",'1 semana', '2 semanas', '1 mês', '3 meses'];
 
 class SelectInput extends StatefulWidget{
   const SelectInput({super.key});

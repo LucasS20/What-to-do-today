@@ -42,9 +42,12 @@ class DayDetails extends StatelessWidget {
               padding:   EdgeInsets.only(bottom: 20),
               child: ProgressBar(),
             ),
-            const Padding(
-              padding:   EdgeInsets.only(bottom: 20),
-              child: CheckboxDay(label: "Terminar de fazer as telas"),
+            const SizedBox(
+              width: 300, 
+              child:  Padding(
+                padding:   EdgeInsets.only(bottom: 20),
+                child: CheckboxDay(label: "Terminar de fazer as telas"),
+              ),
             ),
           ],
         )

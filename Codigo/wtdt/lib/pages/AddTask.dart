@@ -31,12 +31,15 @@ class _AddTaskState extends State<AddTask> {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.all(15),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    focusColor: Colors.amberAccent,
-                    labelText: 'Compremetimento',
-                    hintText: 'Qual é o seu comprometimento?',
+                child: SizedBox(
+                  width: 440,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      focusColor: Colors.amberAccent,
+                      labelText: 'Compremetimento',
+                      hintText: 'Qual é o seu comprometimento?',
+                    ),
                   ),
                 ),
               ),
