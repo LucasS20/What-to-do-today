@@ -47,15 +47,15 @@ class _CheckboxDayState extends State<CheckboxDay> {
                 setState(() {
                   isChecked = value!;
                 });
-              },
+              }, 
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 20),
+          padding: const EdgeInsets.only(left: 15),
           child: Text(label, 
           style:  TextStyle(
-            color: isChecked ? Colors.black54 : Colors.black,
+            color: isChecked ? Colors.brown.shade300 : Colors.brown,
             fontSize: 16,
             fontWeight: FontWeight.w500,
             decoration: isChecked ? TextDecoration.lineThrough : null
