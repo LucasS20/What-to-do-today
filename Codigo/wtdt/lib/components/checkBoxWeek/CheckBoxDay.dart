@@ -48,7 +48,6 @@ class _CheckboxDayState extends State<CheckboxDay> {
               onChanged: (bool? value) {
                 setState(() {
                   isChecked = value!;
-                  onChecked!();
                 });
               }, 
             ),
