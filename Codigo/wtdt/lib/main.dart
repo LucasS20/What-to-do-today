@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wtdt/components/Header.dart';
-import 'package:wtdt/pages/Homepage.dart';
+import 'package:wtdt/pages/LoginPage.dart';
 
 
 
@@ -38,8 +38,7 @@ class MainApp extends StatelessWidget {
           centerTitle: true,
         ),
         body: const Center(
-          child: HomePage(),
-          // child: DayDetails(day: 1, month: Month(numberOfMonth: 1, days: 31)),
+          child: LoginPage(),
         ),
         bottomNavigationBar: BottomAppBar(
           color: Colors.brown[800],

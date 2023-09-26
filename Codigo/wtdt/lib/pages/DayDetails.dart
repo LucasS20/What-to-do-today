@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:wtdt/components/Footer.dart';
 import 'package:wtdt/components/ProgressBar.dart';
 import 'package:wtdt/components/checkBoxWeek/CheckBoxDay.dart';
 import 'package:wtdt/pages/AddTask.dart';
@@ -86,14 +87,7 @@ class DayDetails extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         color: Colors.brown[800],
         height: 70,
-        child: const Row(
-          children: <Widget>[
-            SizedBox(
-              width: 30,
-            ),
-            Icon(Icons.free_breakfast, color: Colors.white, size: 35),
-          ],
-        ),
+        child: Footer(),
       ),
     );
   }
