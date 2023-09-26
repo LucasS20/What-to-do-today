@@ -18,18 +18,19 @@ class _ProgressBarState extends State<ProgressBar> with TickerProviderStateMixin
   _ProgressBarState({ this.progress});
 
   double? progress;
+  
 
   @override
   Widget build(BuildContext context){
     
-    double currentProgress = progress ?? 0;
+    double? currentProgress = progress;
 
-    return const Padding(
-      padding:  EdgeInsets.only(right: 50.0, left: 50.0),
+    return Padding(
+      padding:  const EdgeInsets.only(right: 50.0, left: 50.0),
       child:  LinearProgressIndicator(
-        value: 0.3,
+        value: currentProgress ?? 0,
         minHeight: 8,
-        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        borderRadius:const  BorderRadius.all(Radius.circular(5.0)),
         color: Colors.brown,
         backgroundColor: Colors.black54,
       ),
