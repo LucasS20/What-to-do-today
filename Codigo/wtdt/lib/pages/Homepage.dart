@@ -1,8 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:wtdt/AddTask.dart';
-import 'package:wtdt/Calendaries.dart';
+import 'package:wtdt/pages/AddTask.dart';
+import 'package:wtdt/components/calendaries/Calendaries.dart';
 
 class HomePage extends StatelessWidget{
   const HomePage({super.key});

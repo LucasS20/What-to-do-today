@@ -3,7 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:wtdt/DayDetails.dart';
+import 'package:wtdt/pages/DayDetails.dart';
 import 'package:wtdt/utils/Month.dart';
 
 // ignore: use_key_in_widget_constructors
