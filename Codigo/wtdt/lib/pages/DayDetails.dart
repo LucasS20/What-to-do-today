@@ -10,22 +10,23 @@ import 'package:wtdt/pages/AddTask.dart';
 import 'package:wtdt/utils/Month.dart';
 import 'package:wtdt/components/Header.dart';
 
-class DayDetails extends StatelessWidget {
+class DayDetails extends StatefulWidget {
   const DayDetails({super.key, required this.day, required this.month});
   final int day;
   final Month month;
 
-  
+  @override
+  State<DayDetails> createState() => _DayDetailsState();
+}
 
+class _DayDetailsState extends State<DayDetails> {
   @override
   Widget build(BuildContext context) {
     int totalTask = 10;
     int taskMade = Random().nextInt(10);
     double percent = (taskMade / totalTask);
     
-
-    int numberMonth = month.numberOfMonth;
-    String mes = month.getNameMonth();
+    String mes = widget.month.getNameMonth();
     return Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
@@ -42,7 +43,7 @@ class DayDetails extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 5),
               child: Text(
-                "$day de $mes",
+                "${widget.day} de $mes",
                 style: const TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
