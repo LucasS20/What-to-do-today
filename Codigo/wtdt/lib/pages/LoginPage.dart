@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wtdt/components/CustomButtom.dart';
 import 'package:wtdt/components/CustomInputForm.dart';
 import 'package:wtdt/components/CustomText.dart';
+import 'package:wtdt/pages/Homepage.dart';
 
 class LoginPage extends StatelessWidget{
 
@@ -12,27 +13,27 @@ class LoginPage extends StatelessWidget{
 
     return Scaffold(
       backgroundColor: Colors.brown[100],
-      body: const Column(
+      body:  Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        
+
         children: [
-          
-          Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(72.0, 0.0 ,0.0, 8.0),
-                child: CustomText(textLabel: "E-mail", size: 20)
-              ),
-            ]
-          ),
-          
-          Padding(
-            padding: EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
-            child: CustomInputForm(primaryColor: Colors.black, secondaryColor: Colors.grey)
+
+          const Row(
+              children: [
+                Padding(
+                    padding: EdgeInsets.fromLTRB(72.0, 0.0 ,0.0, 8.0),
+                    child: CustomText(textLabel: "E-mail", size: 20)
+                ),
+              ]
           ),
 
-          Row(
+          const Padding(
+              padding: EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
+              child: CustomInputForm(primaryColor: Colors.black, secondaryColor: Colors.grey)
+          ),
+
+          const Row(
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(72.0, 0.0 ,0.0, 8.0),
@@ -41,13 +42,19 @@ class LoginPage extends StatelessWidget{
             ],
           ),
 
-          Padding(
-            padding: EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
-            child: CustomInputForm(primaryColor: Colors.black, secondaryColor: Colors.grey)
+          const Padding(
+              padding: EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
+              child: CustomInputForm(primaryColor: Colors.black, secondaryColor: Colors.grey)
           ),
 
-          CustomButtom(textLabel: 'Entrar', primaryColor: Colors.brown)
-          
+          CustomButtom(textLabel: 'Entrar', primaryColor: Colors.brown, onPressed: () {
+            Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return const HomePage();
+                }
+            ));
+          },)
+
         ],
       ),
     );
@@ -55,4 +62,3 @@ class LoginPage extends StatelessWidget{
   }
 
 }
-

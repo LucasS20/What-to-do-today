@@ -3,18 +3,18 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:wtdt/DayDetails.dart';
+import 'package:wtdt/pages/DayDetails.dart';
 import 'package:wtdt/utils/Month.dart';
 
 // ignore: use_key_in_widget_constructors
 class HabbitDayButton extends StatefulWidget {
 
   const HabbitDayButton({super.key, required this.day ,required this.month});
-  
+
   final int day;
   final Month month;
 
-  
+
 
   @override
   // ignore: library_private_types_in_public_api, no_logic_in_create_state
@@ -36,28 +36,28 @@ class _HabbitDayButtonState extends State<HabbitDayButton> {
     int intensityColor =  (Random().nextInt(8) + 1) * 100;
     // 800 600 400 200
     if(month.numberOfMonth == today.month && day == today.day ){
-        strokeBorder = 3.0;
+      strokeBorder = 3.0;
     }
 
-    
+
 
     return SizedBox(
       width: 40,
       height: 40,
       child: ElevatedButton(onPressed: () {
         Navigator.push(context, MaterialPageRoute(
-          builder: (context) {
-            return DayDetails(day: day, month: month);
-          }
+            builder: (context) {
+              return DayDetails(day: day, month: month);
+            }
         ));
       },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.brown[intensityColor],
-        side: BorderSide(color: Colors.white, width: strokeBorder),
-        
-        // padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-      ), 
-      child: Text(_label),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.brown[intensityColor],
+          side: BorderSide(color: Colors.white, width: strokeBorder),
+
+          // padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+        ),
+        child: Text(_label),
       ),
     );
   }

@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
-import 'package:wtdt/HabbitDayButton.dart';
+import 'package:wtdt/components/calendaries/HabbitDayButton.dart';
 import 'package:wtdt/utils/Month.dart';
 
 const List<String> week = <String>['D','S','T','Q','Q','S','S'];

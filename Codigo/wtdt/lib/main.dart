@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wtdt/Header.dart';
-import 'package:wtdt/Homepage.dart';
+import 'package:wtdt/components/Header.dart';
+import 'package:wtdt/pages/LoginPage.dart';
+
 
 
 void main() {
@@ -9,7 +10,7 @@ void main() {
 
 // ignore: must_be_immutable
 class MainApp extends StatelessWidget {
-  
+
   final String title = "What to do today?";
 
   const MainApp({super.key});
@@ -18,6 +19,11 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      // localizationsDelegates: const [
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate
+      // ],
+      // supportedLocales: const [Locale('pt', 'BR')],
       title: "What to do Today",
       theme: ThemeData(
         primaryColor: Colors.transparent,
@@ -32,8 +38,7 @@ class MainApp extends StatelessWidget {
           centerTitle: true,
         ),
         body: const Center(
-          child: HomePage(),
-          // child: GridWeek(),
+          child: LoginPage(),
         ),
         bottomNavigationBar: BottomAppBar(
           color: Colors.brown[800],
@@ -41,9 +46,9 @@ class MainApp extends StatelessWidget {
           child: const Row(
             children: <Widget>[
               SizedBox(width: 30,),
-               Icon(Icons.free_breakfast,
-               color: Colors.white,
-               size: 35),
+              Icon(Icons.free_breakfast,
+                  color: Colors.white,
+                  size: 35),
             ],
           ),
         ),

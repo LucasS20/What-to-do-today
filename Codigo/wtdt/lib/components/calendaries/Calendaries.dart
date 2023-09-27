@@ -2,37 +2,37 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:wtdt/GridWeek.dart';
-import 'package:wtdt/SummaryHabbitDay.dart';
+import 'package:wtdt/components/Calendaries/GridWeek.dart';
+import 'package:wtdt/components/Calendaries/SummaryHabbitDay.dart';
 import 'package:wtdt/utils/Month.dart';
 
 class Calendaries extends StatelessWidget {
   const Calendaries({super.key});
 
-  
+
   @override
   Widget build(BuildContext context) {
     final int currentMonth = DateTime.now().month;
 
     return Center(
       child: CarouselSlider(
-        options: CarouselOptions(height: 400.0, initialPage: currentMonth - 1),
-        items: List.generate(months.length, (index) => 
-           SizedBox(
-            child: Column(
-              children:  <Widget>[
-                Text(months[index].getNameMonth(),
-                style: const TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black45
-                )),
-                GridWeek(key: key),
-                SummaryHabbitDay(month: months[index])
-              ],
-            ),
+          options: CarouselOptions(height: 400.0, initialPage: currentMonth - 1),
+          items: List.generate(months.length, (index) =>
+              SizedBox(
+                child: Column(
+                  children:  <Widget>[
+                    Text(months[index].getNameMonth(),
+                        style: const TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black45
+                        )),
+                    GridWeek(key: key),
+                    SummaryHabbitDay(month: months[index])
+                  ],
+                ),
+              )
           )
-        )
       ),
     );
   }
