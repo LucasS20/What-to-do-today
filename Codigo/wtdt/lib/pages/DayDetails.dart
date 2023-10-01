@@ -9,27 +9,20 @@ import 'package:wtdt/components/ProgressBar.dart';
 import 'package:wtdt/components/checkBoxWeek/CheckBoxDay.dart';
 import 'package:wtdt/utils/Month.dart';
 import 'package:wtdt/components/Header.dart';
+import 'package:wtdt/utils/Task.dart';
 
 class DayDetails extends StatelessWidget {
   const DayDetails({super.key, required this.day, required this.month});
   final int day;
   final Month month;
 
-  
+  // final checkboxController = checkboxController();
 
   @override
   Widget build(BuildContext context) {
-    int totalTask = 10;
-    int taskMade = Random().nextInt(10);
+    int totalTask = listTask.length;
+    int taskMade = Random().nextInt(listTask.length);
     double percent = (taskMade / totalTask);
-    
-    void _controlTaskMade(bool checked){
-        if(checked){
-          taskMade++;
-        }else{
-          taskMade--;
-        }
-    }
 
     String mes = month.getNameMonth();
     return Scaffold(
@@ -61,11 +54,16 @@ class DayDetails extends StatelessWidget {
             ),
             Column(
               children: List.generate(listTask.length, (index) {
-                return  SizedBox(
+                return SizedBox(
                   width: 300,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 20),
-                    child: CheckboxDay(label: listTask[index], onChecked: ()=>_controlTaskMade),
+                    child: CheckboxDay(
+                        label: listTask[index].description,
+                        isChecked: listTask[index].isChecked,
+                        onChanged: (value) {
+                          listTask[index].isChecked = value!;
+                        }),
                   ),
                 );
               }),
@@ -83,8 +81,19 @@ class DayDetails extends StatelessWidget {
   }
 }
 
-const List<String> listTask = <String>[
-  "Terminar de fazer as telas",
-  "Terminar o crud de Usuários",
-  "Fazer o quiz de gerência",
+List<Task> listTask = <Task>[
+  Task("Terminar de fazer as telas", "", ["", ""], false),
+  Task("Terminaro form de Add task", "", ["", ""], false),
+  Task("Fazer o quiz de gerência", "", ["", ""], false),
+];
+
+final week = <Map>[
+  {"label": "Domingo", "check": false},
+  {"label": "Segunda-feira", "check": false},
+  {"label": "Terça-Feira", "check": false},
+  {"label": "Quarta-Feira", "check": false},
+  {"label": "Quinta-Feira", "check": false},
+  {"label": "Sexta-feira", "check": false},
+  {"label": "Sábado", "check": false},
+  {"label": "Domingo", "check": false},
 ];

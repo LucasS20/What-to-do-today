@@ -15,23 +15,35 @@ class _CheckboxWeekState extends State<CheckboxWeek> {
 
   @override
   Widget build(BuildContext context) {
-    
+    final week = <Map>[
+      {"label": "Domingo", "check": false},
+      {"label": "Segunda-feira", "check": false},
+      {"label": "Terça-Feira", "check": false},
+      {"label": "Quarta-Feira", "check": false},
+      {"label": "Quinta-Feira", "check": false},
+      {"label": "Sexta-feira", "check": false},
+      {"label": "Sábado", "check": false},
+      {"label": "Domingo", "check": false},
+    ];
 
-    return const Center(
-      child:  SizedBox(
+    return Center(
+      child: SizedBox(
         width: 180,
         child: Column(
-          children: [
-            CheckboxDay(label: "Domingo"),
-            CheckboxDay(label: "Segunda-feira"),
-            CheckboxDay(label: "Terça-Feira"),
-            CheckboxDay(label: "Quarta-Feira"),
-            CheckboxDay(label: "Quinta-feira"),
-            CheckboxDay(label: "Sexta-feira"),
-            CheckboxDay(label: "Sábado"),
-          ],
+          children: List.generate(week.length, (index) {
+            return CheckboxDay(
+                label: week[index]["label"],
+                isChecked: week[index]["check"],
+                onChanged: (value) {
+                  setState(() {
+                    week[index]["check"] = value;
+                  });
+                });
+          }),
         ),
       ),
     );
   }
 }
+// CheckboxDay(label: "Domingo"),
+

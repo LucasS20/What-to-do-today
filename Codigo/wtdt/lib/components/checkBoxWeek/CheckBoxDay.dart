@@ -2,23 +2,29 @@
 
 import 'package:flutter/material.dart';
 
-class CheckboxDay extends StatefulWidget {
-  const CheckboxDay({super.key, required this.label, this.onChecked});
+
+class CheckboxDay extends Checkbox {
+  const CheckboxDay({super.key, required this.label,required this.isChecked ,required this.onChanged}) 
+  : super(value: isChecked, onChanged: onChanged);
 
   final String label;
-  final VoidCallback? onChecked;
+
+  final bool isChecked;
+  @override
+  final Function(bool?) onChanged;
+
 
   @override
   // ignore: no_logic_in_create_state
-  State<CheckboxDay> createState() => _CheckboxDayState(label: label, onChecked: onChecked);
+  State<CheckboxDay> createState() => _CheckboxDayState(label: label, onChanged: onChanged, isChecked: isChecked);
 }
 
 class _CheckboxDayState extends State<CheckboxDay> {
-  _CheckboxDayState({required this.label, this.onChecked});
+  _CheckboxDayState({required this.label, required this.isChecked, required this.onChanged});
 
-  bool isChecked = false;
   final String label;
-  final VoidCallback? onChecked;
+  bool isChecked;
+  final Function(bool?) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +51,12 @@ class _CheckboxDayState extends State<CheckboxDay> {
               checkColor: Colors.white,
               fillColor: MaterialStateProperty.resolveWith(getColor),
               value: isChecked,
-              onChanged: (bool? value) {
+              onChanged: (bool? value){
                 setState(() {
                   isChecked = value!;
+                  onChanged(value);
                 });
+                
               }, 
             ),
           ),
