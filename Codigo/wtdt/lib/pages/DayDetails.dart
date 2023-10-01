@@ -3,10 +3,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:wtdt/components/CustomFloatingButtom.dart';
 import 'package:wtdt/components/Footer.dart';
 import 'package:wtdt/components/ProgressBar.dart';
 import 'package:wtdt/components/checkBoxWeek/CheckBoxDay.dart';
-import 'package:wtdt/pages/AddTask.dart';
 import 'package:wtdt/utils/Month.dart';
 import 'package:wtdt/components/Header.dart';
 
@@ -23,8 +23,14 @@ class DayDetails extends StatelessWidget {
     int taskMade = Random().nextInt(10);
     double percent = (taskMade / totalTask);
     
+    void _controlTaskMade(bool checked){
+        if(checked){
+          taskMade++;
+        }else{
+          taskMade--;
+        }
+    }
 
-    int numberMonth = month.numberOfMonth;
     String mes = month.getNameMonth();
     return Scaffold(
       backgroundColor: Colors.brown[100],
@@ -59,7 +65,7 @@ class DayDetails extends StatelessWidget {
                   width: 300,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 20),
-                    child: CheckboxDay(label: listTask[index], onChecked: ()=>{}),
+                    child: CheckboxDay(label: listTask[index], onChecked: ()=>_controlTaskMade),
                   ),
                 );
               }),
@@ -67,23 +73,7 @@ class DayDetails extends StatelessWidget {
           ],
         )),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const AddTask();
-          }));
-        },
-        foregroundColor: Colors.brown[200],
-        backgroundColor: Colors.brown,
-        child: const Text(
-          "+",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 40,
-          ),
-        ),
-      ),
+      floatingActionButton: const CustomFloatingButtom(),
       bottomNavigationBar: BottomAppBar(
         color: Colors.brown[800],
         height: 70,
