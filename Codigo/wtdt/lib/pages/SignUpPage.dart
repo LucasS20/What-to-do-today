@@ -1,16 +1,21 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:wtdt/components/CustomButtom.dart';
 import 'package:wtdt/components/CustomInputForm.dart';
 import 'package:wtdt/components/CustomText.dart';
 import 'package:wtdt/components/Header.dart';
-import 'package:wtdt/components/HeaderSignUp.dart';
 import 'package:wtdt/main.dart';
-import 'package:wtdt/pages/Homepage.dart';
-import 'package:wtdt/pages/LoginPage.dart';
+import 'package:wtdt/utils/User.dart';
+
 
 class SignUpPage extends StatelessWidget{
 
-  const SignUpPage({super.key});
+   SignUpPage({super.key});
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context){
@@ -21,7 +26,7 @@ class SignUpPage extends StatelessWidget{
         toolbarHeight: 160,
         elevation: 0,
         backgroundColor: Colors.brown[100],
-        title: const HeaderSignUp(firstPart: 'Criar', secondtPart: 'Conta'),
+        title: const Header(firstPart: 'Criar', secondtPart: 'Conta'),
       ),
       body:  Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,9 +43,9 @@ class SignUpPage extends StatelessWidget{
             ]
           ),
           
-          const Padding(
-            padding: EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
-            child: CustomInputForm(primaryColor: Colors.black, secondaryColor: Colors.grey)
+           Padding(
+            padding: const EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
+            child: CustomInputForm(primaryColor: Colors.black, secondaryColor: Colors.grey, controller: _nameController,)
           ),
           
           const Row(
@@ -52,9 +57,9 @@ class SignUpPage extends StatelessWidget{
             ]
           ),
           
-          const Padding(
-            padding: EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
-            child: CustomInputForm(primaryColor: Colors.black, secondaryColor: Colors.grey)
+           Padding(
+            padding:const EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
+            child: CustomInputForm(primaryColor: Colors.black, secondaryColor: Colors.grey, controller: _emailController,)
           ),
 
           const Row(
@@ -66,12 +71,18 @@ class SignUpPage extends StatelessWidget{
             ],
           ),
 
-          const Padding(
-            padding: EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
-            child: CustomInputForm(primaryColor: Colors.black, secondaryColor: Colors.grey)
+           Padding(
+            padding: const EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
+            child: CustomInputForm(primaryColor: Colors.black, secondaryColor: Colors.grey, controller: _passwordController,)
           ),
 
           CustomButtom(textLabel: 'Criar', primaryColor: Colors.brown, onPressed: () {
+            final String name = _emailController.text;
+            final String email = _emailController.text;
+            final String password = _passwordController.text;
+
+            final User newUser = User(name, email, password);
+            
             Navigator.push(context, MaterialPageRoute(
             builder: (context) {
             return const MainApp();

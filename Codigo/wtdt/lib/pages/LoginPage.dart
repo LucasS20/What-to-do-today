@@ -11,6 +11,9 @@ class LoginPage extends StatelessWidget{
   @override
   Widget build(BuildContext context){
 
+    final TextEditingController _emailController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
+
     return Scaffold(
       backgroundColor: Colors.brown[100],
       body:  Column(
@@ -28,9 +31,9 @@ class LoginPage extends StatelessWidget{
               ]
           ),
 
-          const Padding(
-              padding: EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
-              child: CustomInputForm(primaryColor: Colors.black, secondaryColor: Colors.grey)
+           Padding(
+              padding: const EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
+              child: CustomInputForm(primaryColor: Colors.black, secondaryColor: Colors.grey, controller: _emailController,)
           ),
 
           const Row(
@@ -42,14 +45,18 @@ class LoginPage extends StatelessWidget{
             ],
           ),
 
-          const Padding(
-              padding: EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
-              child: CustomInputForm(primaryColor: Colors.black, secondaryColor: Colors.grey)
+           Padding(
+              padding: const EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
+              child: CustomInputForm(primaryColor: Colors.black, secondaryColor: Colors.grey, controller: _passwordController,)
           ),
 
           CustomButtom(textLabel: 'Entrar', primaryColor: Colors.brown, onPressed: () {
             Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
+                  final String email = _emailController.text;
+                  final String password = _passwordController.text;
+                  // ignore: avoid_print
+                  // print("emial: $email, senha: $password");
                   return const HomePage();
                 }
             ));
