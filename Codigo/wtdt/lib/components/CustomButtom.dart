@@ -38,8 +38,8 @@ class _CustomButtomState extends State<CustomButtom>{
   @override
   Widget build(BuildContext context) {
 
-    const Size min = Size(325.0, 80.0);
-    const Size max = Size(475.0, 80.0);
+    const Size min = Size(300.0, 60.0);
+    const Size max = Size(375.0, 60.0);
 
     TextStyles styles = TextStyles();
 

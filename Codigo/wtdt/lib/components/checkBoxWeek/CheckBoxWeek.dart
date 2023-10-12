@@ -28,7 +28,7 @@ class _CheckboxWeekState extends State<CheckboxWeek> {
 
     return Center(
       child: SizedBox(
-        width: 180,
+        width: 200,
         child: Column(
           children: List.generate(week.length, (index) {
             return CheckboxDay(

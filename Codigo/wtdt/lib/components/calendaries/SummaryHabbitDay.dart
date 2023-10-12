@@ -27,8 +27,8 @@ class _SummaryHabbitDayState extends State<SummaryHabbitDay>{
   @override
   Widget build(BuildContext context){
     return SizedBox(
-      height: 320,
-      width: 320,
+      height: 300,
+      width: 300,
       child: GridView.count(
         crossAxisSpacing: 15,
         mainAxisSpacing: 15,

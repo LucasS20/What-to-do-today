@@ -16,20 +16,26 @@ class Calendaries extends StatelessWidget {
 
     return Center(
       child: CarouselSlider(
-          options: CarouselOptions(height: 400.0, initialPage: currentMonth - 1),
+          options: CarouselOptions(
+            height: 450.0, 
+            initialPage: currentMonth - 1
+          ),
           items: List.generate(months.length, (index) =>
-              SizedBox(
-                child: Column(
-                  children:  <Widget>[
-                    Text(months[index].getNameMonth(),
-                        style: const TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black45
-                        )),
-                    GridWeek(key: key),
-                    SummaryHabbitDay(month: months[index])
-                  ],
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: SizedBox(
+                  child: Column(
+                    children:  <Widget>[
+                      Text(months[index].getNameMonth(),
+                          style: const TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black45
+                          )),
+                      GridWeek(key: key),
+                      SummaryHabbitDay(month: months[index])
+                    ],
+                  ),
                 ),
               )
           )

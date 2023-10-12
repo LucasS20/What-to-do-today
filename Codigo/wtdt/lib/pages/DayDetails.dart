@@ -11,20 +11,32 @@ import 'package:wtdt/utils/Month.dart';
 import 'package:wtdt/components/Header.dart';
 import 'package:wtdt/utils/Task.dart';
 
-class DayDetails extends StatelessWidget {
+class DayDetails extends StatefulWidget {
   const DayDetails({super.key, required this.day, required this.month});
   final int day;
   final Month month;
 
-  // final checkboxController = checkboxController();
+  @override
+  State<DayDetails> createState() => _DayDetailsState();
+}
+
+class _DayDetailsState extends State<DayDetails> {
+  
+  List<Task> listTask = <Task>[
+    Task("Terminar de fazer as telas", "", ["", ""], false),
+    Task("Terminaro form de Add task", "", ["", ""], false),
+    Task("Fazer o quiz de gerência", "", ["", ""], false),
+  ];
 
   @override
   Widget build(BuildContext context) {
+    String mes = widget.month.getNameMonth();
     int totalTask = listTask.length;
-    int taskMade = Random().nextInt(listTask.length);
+    // int taskMade = Random().nextInt(listTask.length);
+    int taskMade = listTask.where((task) => task.isChecked).length;
     double percent = (taskMade / totalTask);
 
-    String mes = month.getNameMonth();
+    
     return Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
@@ -41,7 +53,7 @@ class DayDetails extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 5),
               child: Text(
-                "$day de $mes",
+                "${widget.day} de $mes",
                 style: const TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -62,7 +74,17 @@ class DayDetails extends StatelessWidget {
                         label: listTask[index].description,
                         isChecked: listTask[index].isChecked,
                         onChanged: (value) {
-                          listTask[index].isChecked = value!;
+                          setState(() {
+                            listTask[index].isChecked = value!;
+                            if(value){
+                              taskMade++;
+                              percent = (taskMade / totalTask);
+                            }else{
+                              taskMade--;
+                              percent = (taskMade / totalTask);
+                            }
+                            // print("progress $taskMade $percent");
+                          });
                         }),
                   ),
                 );
@@ -80,20 +102,3 @@ class DayDetails extends StatelessWidget {
     );
   }
 }
-
-List<Task> listTask = <Task>[
-  Task("Terminar de fazer as telas", "", ["", ""], false),
-  Task("Terminaro form de Add task", "", ["", ""], false),
-  Task("Fazer o quiz de gerência", "", ["", ""], false),
-];
-
-final week = <Map>[
-  {"label": "Domingo", "check": false},
-  {"label": "Segunda-feira", "check": false},
-  {"label": "Terça-Feira", "check": false},
-  {"label": "Quarta-Feira", "check": false},
-  {"label": "Quinta-Feira", "check": false},
-  {"label": "Sexta-feira", "check": false},
-  {"label": "Sábado", "check": false},
-  {"label": "Domingo", "check": false},
-];

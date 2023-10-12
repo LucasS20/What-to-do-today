@@ -5,23 +5,28 @@ import 'package:flutter/material.dart';
 const List<String> options = <String>["uma",'1 semana', '2 semanas', '1 mês', '3 meses'];
 
 class SelectInput extends StatefulWidget{
-  const SelectInput({super.key});
+  const SelectInput({super.key, required this.value});
 
+  final String value;
 
+  
 
    @override
-  State<SelectInput> createState() => _SelectInputState();
+  // ignore: no_logic_in_create_state
+  State<SelectInput> createState() => _SelectInputState(value: value);
 }
 
 class _SelectInputState extends State<SelectInput>{
 
+  _SelectInputState({required this.value});
   final String label = "Recorrência";
   String value = options.first;
+    
 
   @override
   Widget build(BuildContext context){
     return DropdownMenu<String>(
-      width: 440,
+      width: 340,
       label: Text(label, 
         style: const TextStyle(
           fontSize: 18,

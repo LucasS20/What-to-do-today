@@ -15,7 +15,7 @@ class GridWeek extends StatelessWidget{
 
     return SizedBox(
       height: 30,
-      width: 310,
+      width: 300,
       child: GridView.count(
           crossAxisCount: number_of_columns,
           crossAxisSpacing: 25,

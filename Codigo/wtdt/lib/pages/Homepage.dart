@@ -21,8 +21,10 @@ class HomePage extends StatelessWidget{
         title: const Header(firstPart: 'What to do', secondtPart: 'Today?'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Calendaries(),
+      body: const SingleChildScrollView(
+        child:  Center(
+          child: Calendaries(),
+        ),
       ),
       floatingActionButton: const CustomFloatingButtom(),
       bottomNavigationBar: BottomAppBar(
