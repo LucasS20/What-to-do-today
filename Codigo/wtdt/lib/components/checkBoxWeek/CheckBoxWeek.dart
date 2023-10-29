@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wtdt/components/checkBoxWeek/CheckBoxDay.dart';
 
 class CheckboxWeek extends StatefulWidget {
@@ -26,6 +27,20 @@ class _CheckboxWeekState extends State<CheckboxWeek> {
       {"label": "Domingo", "check": false},
     ];
 
+    saveWeekList(String weekDay, bool staus) async {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      List<String> weekDaysList = prefs.getStringList("weekDaysList") ?? [];
+
+      if(staus){
+        weekDaysList.add(weekDay);
+      }else{
+        weekDaysList.remove(weekDay);
+      }
+
+      await prefs.setStringList("weekDaysList", weekDaysList);
+      // print(List.from(week));
+    }
+
     return Center(
       child: SizedBox(
         width: 200,
@@ -34,10 +49,11 @@ class _CheckboxWeekState extends State<CheckboxWeek> {
             return CheckboxDay(
                 label: week[index]["label"],
                 isChecked: week[index]["check"],
-                onChanged: (value) {
+                onChanged: (value){
                   setState(() {
                     week[index]["check"] = value;
                   });
+                  saveWeekList(week[index]["label"], week[index]["check"]);
                 });
           }),
         ),
