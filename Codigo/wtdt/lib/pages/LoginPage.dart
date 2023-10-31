@@ -61,8 +61,6 @@ class LoginPage extends StatelessWidget {
               primaryColor: Colors.brown,
               onPressed: () async {
                 bool valido = await validaLogin();
-                print("Olha --------------------------------------");
-                print(valido);
                 if(valido){
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     // ignore: avoid_print

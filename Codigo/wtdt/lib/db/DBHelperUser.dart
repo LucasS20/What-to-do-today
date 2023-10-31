@@ -74,16 +74,8 @@ class DBHelperUser{
   static Future<bool> realizaLogin(String email, String senha) async{
 
     final db = await DBHelperUser.db();
-
     final result = await db.query(nomeTabela, where: "email = ? AND senha = ?", whereArgs: [email, senha], limit: 1);
-    debugPrint("------------------------");
-    debugPrint("result: $result");
-
-    if(result.isEmpty) {
-      return false;
-    }
-
-    return true;
+    return result.isEmpty;
   } 
 
 }
