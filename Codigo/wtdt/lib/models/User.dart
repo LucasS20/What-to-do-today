@@ -1,15 +1,15 @@
 class User{
 
-  final int id;
+  final int? id;
   final String email;
   final String senha;
   final String nome;
 
   const User ({
-    required this.id,
+    this.id,
+    required this.nome,
     required this.email,
     required this.senha,
-    required this.nome
   });
 
 }

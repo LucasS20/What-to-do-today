@@ -17,13 +17,15 @@ class Calendaries extends StatelessWidget {
     return Center(
       child: CarouselSlider(
           options: CarouselOptions(
+            viewportFraction: 1.0,
             height: 450.0, 
             initialPage: currentMonth - 1
           ),
           items: List.generate(months.length, (index) =>
               Padding(
-                padding: const EdgeInsets.only(top: 20.0),
+                padding: const EdgeInsets.only(top: 20.0, left: 5.0),
                 child: SizedBox(
+                  width: 400,
                   child: Column(
                     children:  <Widget>[
                       Text(months[index].getNameMonth(),
