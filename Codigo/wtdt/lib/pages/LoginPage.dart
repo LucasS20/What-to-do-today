@@ -19,7 +19,11 @@ class LoginPage extends StatelessWidget {
     Future<bool> validaLogin() async {
       final String email = _emailController.text;
       final String senha = _passwordController.text;
-      return await DBHelperUser.realizaLogin(email, senha);
+      if(email == "" || senha == ""){
+        return false;
+      }else{
+        return await DBHelperUser.realizaLogin(email, senha);
+      }
     }
 
     return Scaffold(
@@ -61,7 +65,7 @@ class LoginPage extends StatelessWidget {
               primaryColor: Colors.brown,
               onPressed: () async {
                 bool valido = await validaLogin();
-                if(valido){
+                if(!valido){
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     // ignore: avoid_print
                     // print("emial: $email, senha: $password");
