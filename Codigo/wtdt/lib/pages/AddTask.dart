@@ -33,7 +33,7 @@ class _AddTaskState extends State<AddTask> {
 
     switch (frequency) {
       case 'hoje':
-        futureDays.add(DateTime.now().toString());
+        futureDays.add(DateToStr(DateTime.now()));
         break;
       
       case '1 semana':
@@ -81,13 +81,21 @@ class _AddTaskState extends State<AddTask> {
           daysToSum = (7 + (7 * i));
         }
 
-        futureDays.add(today.add(Duration(days: daysToSum)).toString());
+        futureDays.add(DateToStr(today.add(Duration(days: daysToSum))));
       }
 
 
     }
 
     return futureDays;
+  }
+
+  String DateToStr(DateTime date) {
+    int day = date.day;
+    int month = date.month;
+    int year = date.year;
+
+    return "$year-$month-$day ";
   }
 
   @override
