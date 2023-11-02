@@ -14,12 +14,12 @@ class GridWeek extends StatelessWidget{
   Widget build(BuildContext context){
 
     return SizedBox(
-      height: 30,
-      width: 300,
+      height: 40,
+      width: 360,
       child: GridView.count(
           crossAxisCount: number_of_columns,
-          crossAxisSpacing: 25,
-          mainAxisSpacing: 15,
+          crossAxisSpacing: 30,
+          mainAxisSpacing: 25,
           children: List.generate(week.length, (index) {
             return Text(week[index],
                 style: const TextStyle(

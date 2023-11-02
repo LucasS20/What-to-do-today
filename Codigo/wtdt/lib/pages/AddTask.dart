@@ -1,7 +1,4 @@
 // ignore_for_file: file_names
-
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wtdt/components/CustomButtom.dart';
@@ -9,7 +6,7 @@ import 'package:wtdt/components/checkBoxWeek/CheckBoxWeek.dart';
 import 'package:wtdt/components/Header.dart';
 import 'package:wtdt/components/SelectInput.dart';
 import 'package:wtdt/db/DBHelperTask.dart';
-import 'package:wtdt/models/Task.dart';
+
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -95,7 +92,7 @@ class _AddTaskState extends State<AddTask> {
     int month = date.month;
     int year = date.year;
 
-    return "$year-$month-$day ";
+    return "$year-$month-$day";
   }
 
   @override

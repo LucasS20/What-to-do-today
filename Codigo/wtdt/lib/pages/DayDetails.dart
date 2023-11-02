@@ -1,15 +1,13 @@
-// ignore_for_file: file_names
-
-import 'dart:math';
-
+// ignore_for_file: file_names, no_logic_in_create_state
 import 'package:flutter/material.dart';
 import 'package:wtdt/components/CustomFloatingButtom.dart';
 import 'package:wtdt/components/Footer.dart';
 import 'package:wtdt/components/ProgressBar.dart';
 import 'package:wtdt/components/checkBoxWeek/CheckBoxDay.dart';
+import 'package:wtdt/db/DBHelperTask.dart';
 import 'package:wtdt/utils/Month.dart';
 import 'package:wtdt/components/Header.dart';
-import 'package:wtdt/utils/Task.dart';
+import 'package:wtdt/models/Task.dart';
 
 class DayDetails extends StatefulWidget {
   const DayDetails({super.key, required this.day, required this.month});
@@ -17,25 +15,48 @@ class DayDetails extends StatefulWidget {
   final Month month;
 
   @override
-  State<DayDetails> createState() => _DayDetailsState();
+  State<DayDetails> createState() => _DayDetailsState(day: day, month: month);
 }
 
 class _DayDetailsState extends State<DayDetails> {
   
-  List<Task> listTask = <Task>[
-    Task("Terminar de fazer as telas", "", ["", ""], false),
-    Task("Terminaro form de Add task", "", ["", ""], false),
-    Task("Fazer o quiz de gerência", "", ["", ""], false),
-  ];
+   _DayDetailsState({required this.day ,required this.month});
+
+  final int day;
+  final Month month;
+  List<Task> listTask = <Task>[];
+
+  @override
+  void initState(){
+    
+    super.initState();
+    startConfig();
+    
+  }
+
+  startConfig() async{
+    
+    final int year = DateTime.now().year;
+    final datefilter =  "$year-${month.numberOfMonth}-$day";
+    final data = await DBHelperTask.retornatarefaPeloData(datefilter);
+    
+    for (var map in data) {
+      Task task = Task.fromMap(map);
+      setState(() {
+        listTask.add(task);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     String mes = widget.month.getNameMonth();
     int totalTask = listTask.length;
     // int taskMade = Random().nextInt(listTask.length);
-    int taskMade = listTask.where((task) => task.isChecked).length;
+    int taskMade = listTask.where((task) => task.concluido == 1).length;
     double percent = (taskMade / totalTask);
 
+    // startConfig(); Aqui dá ruim
     
     return Scaffold(
       backgroundColor: Colors.brown[100],
@@ -62,7 +83,7 @@ class _DayDetailsState extends State<DayDetails> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
-              child: ProgressBar(progress: percent),
+              child: ProgressBar(progress: 0.8),
             ),
             Column(
               children: List.generate(listTask.length, (index) {
@@ -71,15 +92,16 @@ class _DayDetailsState extends State<DayDetails> {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: CheckboxDay(
-                        label: listTask[index].description,
-                        isChecked: listTask[index].isChecked,
+                        label: listTask[index].descricao,
+                        isChecked: listTask[index].concluido == 1,
                         onChanged: (value) {
                           setState(() {
-                            listTask[index].isChecked = value!;
-                            if(value){
+                            if(value!){
+                              listTask[index].concluido = 1;
                               taskMade++;
                               percent = (taskMade / totalTask);
                             }else{
+                              listTask[index].concluido = 0;
                               taskMade--;
                               percent = (taskMade / totalTask);
                             }

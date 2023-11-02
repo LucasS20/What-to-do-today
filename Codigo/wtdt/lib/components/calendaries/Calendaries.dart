@@ -18,7 +18,7 @@ class Calendaries extends StatelessWidget {
       child: CarouselSlider(
           options: CarouselOptions(
             viewportFraction: 1.0,
-            height: 450.0, 
+            height: 650.0, 
             initialPage: currentMonth - 1
           ),
           items: List.generate(months.length, (index) =>

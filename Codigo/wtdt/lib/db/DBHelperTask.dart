@@ -1,7 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, file_names, use_build_context_synchronously
 
 
-import 'dart:ffi';
 
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart' as sql;
@@ -76,7 +75,7 @@ class DBHelperTask{
     
   }
 
-  static Future<List<Map<String, dynamic>>> listaTarefas() async {
+  static Future<List<Map<String, Object?>>> listaTarefas() async {
     final db = await DBHelperTask.db();
     return db.query(nomeTabela, orderBy: "id");
   }
@@ -84,6 +83,12 @@ class DBHelperTask{
   static Future<List<Map<String, dynamic>>> retornatarefaPeloId(int id) async {
     final db = await DBHelperTask.db();
     return db.query(nomeTabela, where: "id = ?", whereArgs: [id], limit: 1);
+  }
+
+  /// @param String format -> yyyy-mm-dd
+  static Future<List<Map<String, dynamic>>> retornatarefaPeloData(String data) async {
+    final db = await DBHelperTask.db();
+    return db.query(nomeTabela, where: "data = ?", whereArgs: [data]);
   }
 
   static Future<int> atualizatarefa(

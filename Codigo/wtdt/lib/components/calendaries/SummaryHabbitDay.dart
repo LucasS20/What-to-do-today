@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:wtdt/components/calendaries/HabbitDayButton.dart';
 import 'package:wtdt/utils/Month.dart';
 
-const List<String> week = <String>['D','S','T','Q','Q','S','S'];
-
 class SummaryHabbitDay extends StatefulWidget {
 
   const SummaryHabbitDay({super.key, required this.month});
@@ -27,8 +25,8 @@ class _SummaryHabbitDayState extends State<SummaryHabbitDay>{
   @override
   Widget build(BuildContext context){
     return SizedBox(
-      height: 300,
-      width: 300,
+      height: 400,
+      width: 380,
       child: GridView.count(
         crossAxisSpacing: 15,
         mainAxisSpacing: 15,

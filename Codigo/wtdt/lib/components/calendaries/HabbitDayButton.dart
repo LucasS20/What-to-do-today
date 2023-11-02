@@ -24,7 +24,7 @@ class HabbitDayButton extends StatefulWidget {
 class _HabbitDayButtonState extends State<HabbitDayButton> {
 
   _HabbitDayButtonState({required this.day ,required this.month});
-  final String _label = "";
+  
   final int day;
   final Month month;
   final DateTime today = DateTime.now();
@@ -32,6 +32,8 @@ class _HabbitDayButtonState extends State<HabbitDayButton> {
 
   @override
   Widget build(BuildContext context) {
+
+    final String label = "$day";
     double strokeBorder = 0;
     int intensityColor =  (Random().nextInt(8) + 1) * 100;
     // 800 600 400 200
@@ -42,8 +44,8 @@ class _HabbitDayButtonState extends State<HabbitDayButton> {
 
 
     return SizedBox(
-      width: 40,
-      height: 40,
+      width: 50,
+      height: 50,
       child: ElevatedButton(onPressed: () {
         Navigator.push(context, MaterialPageRoute(
             builder: (context) {
@@ -57,7 +59,10 @@ class _HabbitDayButtonState extends State<HabbitDayButton> {
 
           // padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
         ),
-        child: Text(_label),
+        child: Text(label, style: const TextStyle(
+          fontSize: 8,
+          fontWeight: FontWeight.bold
+        ),)
       ),
     );
   }
