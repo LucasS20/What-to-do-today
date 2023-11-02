@@ -1,12 +1,15 @@
 // ignore_for_file: file_names
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wtdt/components/CustomButtom.dart';
 import 'package:wtdt/components/checkBoxWeek/CheckBoxWeek.dart';
 import 'package:wtdt/components/Header.dart';
 import 'package:wtdt/components/SelectInput.dart';
-import 'package:wtdt/utils/Task.dart';
+import 'package:wtdt/db/DBHelperTask.dart';
+import 'package:wtdt/models/Task.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -23,12 +26,68 @@ class _AddTaskState extends State<AddTask> {
   saveTask() async {
     final prefs = await SharedPreferences.getInstance();
 
+    List<String> futureDays = [];
     final String description = _nameController.text;
-    final String frequency = prefs.getString("selectValue") ?? "";
+    final String frequency = prefs.getString("selectValue") ?? "hoje";
     final List<String> listWeek = prefs.getStringList('weekDaysList') ?? [];
+
+    switch (frequency) {
+      case 'hoje':
+        futureDays.add(DateTime.now().toString());
+        break;
+      
+      case '1 semana':
+        futureDays.addAll(generateListOfFutureDates(listWeek, 1));
+        break;
+
+      case '2 semana':
+        futureDays.addAll(generateListOfFutureDates(listWeek, 2));
+        break;
+
+      case '1 mês':
+        futureDays.addAll(generateListOfFutureDates(listWeek, 4));
+        break;
+
+      case '3 meses':
+        futureDays.addAll(generateListOfFutureDates(listWeek, 12));
+        break;
+
+      default:
+    }
+
+
+    DBHelperTask.adicionarTarefaRepetida(description, futureDays);
+  }
+
+  List<String> generateListOfFutureDates(List<String> listWeek, int frequency) {
+    final DateTime today = DateTime.now();
+    List<String> futureDays = [];
+    int daysToSum =0;
+
+    for (var dayWeek in listWeek) {
+
+      int temp = int.parse(dayWeek);
+
+      for (int i = 0; i < frequency; i++) {
+        if (temp > today.weekday) {
     
-    Task newTask = Task(description, frequency, listWeek, false);
+          daysToSum = (temp - today.weekday) + (7 * i);
     
+        } else if (temp < today.weekday) {
+          
+          daysToSum = (7 - today.weekday +  temp) + (7 * i);
+
+        } else {
+          daysToSum = (7 + (7 * i));
+        }
+
+        futureDays.add(today.add(Duration(days: daysToSum)).toString());
+      }
+
+
+    }
+
+    return futureDays;
   }
 
   @override
@@ -79,7 +138,7 @@ class _AddTaskState extends State<AddTask> {
               CustomButtom(
                   textLabel: "Criar",
                   primaryColor: Colors.brown,
-                  onPressed: (){
+                  onPressed: () {
                     saveTask();
                   })
             ],

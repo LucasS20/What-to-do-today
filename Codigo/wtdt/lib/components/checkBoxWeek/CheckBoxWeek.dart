@@ -17,14 +17,13 @@ class _CheckboxWeekState extends State<CheckboxWeek> {
   @override
   Widget build(BuildContext context) {
     final week = <Map>[
-      {"label": "Domingo", "check": false},
-      {"label": "Segunda-feira", "check": false},
-      {"label": "Terça-Feira", "check": false},
-      {"label": "Quarta-Feira", "check": false},
-      {"label": "Quinta-Feira", "check": false},
-      {"label": "Sexta-feira", "check": false},
-      {"label": "Sábado", "check": false},
-      {"label": "Domingo", "check": false},
+      {"label": "Domingo", "check": false, "value": '0'},
+      {"label": "Segunda-feira", "check": false, "value": '1'},
+      {"label": "Terça-Feira", "check": false, "value": '2'},
+      {"label": "Quarta-Feira", "check": false, "value": '3'},
+      {"label": "Quinta-Feira", "check": false, "value": '4'},
+      {"label": "Sexta-feira", "check": false, "value": '5'},
+      {"label": "Sábado", "check": false, "value": '6'},
     ];
 
     saveWeekList(String weekDay, bool staus) async {
@@ -53,7 +52,7 @@ class _CheckboxWeekState extends State<CheckboxWeek> {
                   setState(() {
                     week[index]["check"] = value;
                   });
-                  saveWeekList(week[index]["label"], week[index]["check"]);
+                  saveWeekList(week[index]["value"], week[index]["check"]);
                 });
           }),
         ),
