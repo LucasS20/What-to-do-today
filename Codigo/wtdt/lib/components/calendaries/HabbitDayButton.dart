@@ -9,12 +9,11 @@ import 'package:wtdt/utils/Month.dart';
 // ignore: use_key_in_widget_constructors
 class HabbitDayButton extends StatefulWidget {
 
-  const HabbitDayButton({super.key, required this.day ,required this.month});
+  HabbitDayButton({super.key, required this.day ,required this.month});
 
   final int day;
   final Month month;
-
-
+  
 
   @override
   // ignore: library_private_types_in_public_api, no_logic_in_create_state
@@ -27,13 +26,14 @@ class _HabbitDayButtonState extends State<HabbitDayButton> {
   
   final int day;
   final Month month;
+  
   final DateTime today = DateTime.now();
 
 
   @override
   Widget build(BuildContext context) {
-
-    final String label = "$day";
+    final bool disable = day < 1;
+    String label = "";
     double strokeBorder = 0;
     int intensityColor =  (Random().nextInt(8) + 1) * 100;
     // 800 600 400 200
@@ -41,18 +41,22 @@ class _HabbitDayButtonState extends State<HabbitDayButton> {
       strokeBorder = 3.0;
     }
 
+    if(!disable){
+      label = "$day";
+    }
 
 
     return SizedBox(
       width: 50,
       height: 50,
-      child: ElevatedButton(onPressed: () {
+      child: ElevatedButton(onPressed: disable ? null : () {
         Navigator.push(context, MaterialPageRoute(
             builder: (context) {
               return DayDetails(day: day, month: month);
             }
         ));
       },
+        
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.brown[intensityColor],
           side: BorderSide(color: Colors.white, width: strokeBorder),

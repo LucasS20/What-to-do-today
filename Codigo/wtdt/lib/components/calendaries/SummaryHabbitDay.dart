@@ -24,6 +24,12 @@ class _SummaryHabbitDayState extends State<SummaryHabbitDay>{
   final int number_of_columns = 7; 
   @override
   Widget build(BuildContext context){
+
+    final int startWeekDay = DateTime(DateTime.now().year, month.numberOfMonth, 1).weekday;
+    int dayRegulador = startWeekDay;
+    if(startWeekDay == 7){
+      dayRegulador = 0;
+    }
     return SizedBox(
       height: 400,
       width: 380,
@@ -31,9 +37,9 @@ class _SummaryHabbitDayState extends State<SummaryHabbitDay>{
         crossAxisSpacing: 15,
         mainAxisSpacing: 15,
         crossAxisCount: number_of_columns,
-        children: List.generate(month.days, (index) {
+        children: List.generate(month.days + dayRegulador, (index) {
           return Center(
-            child: HabbitDayButton(month: month, day: index + 1),
+            child: HabbitDayButton(month: month, day: index + 1 - dayRegulador),
           );
         }),
         )
