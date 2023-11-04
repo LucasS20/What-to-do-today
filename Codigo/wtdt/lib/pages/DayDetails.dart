@@ -19,45 +19,64 @@ class DayDetails extends StatefulWidget {
 }
 
 class _DayDetailsState extends State<DayDetails> {
-  
-   _DayDetailsState({required this.day ,required this.month});
+  _DayDetailsState({required this.day, required this.month});
 
   final int day;
   final Month month;
   List<Task> listTask = <Task>[];
 
+  int totalTask = 0;
+  int taskMade = 0;
+  double percent = 0;
+
   @override
-  void initState(){
-    
+  void initState() {
     super.initState();
     startConfig();
-    
   }
 
-  startConfig() async{
-    
+  startConfig() async {
     final int year = DateTime.now().year;
-    final datefilter =  "$year-${month.numberOfMonth}-$day";
+    final datefilter = "$year-${month.numberOfMonth}-$day";
     final data = await DBHelperTask.retornatarefaPeloData(datefilter);
-    
+
     for (var map in data) {
       Task task = Task.fromMap(map);
       setState(() {
         listTask.add(task);
       });
     }
+
+    totalTask = listTask.length;
+    taskMade = listTask.where((task) => task.concluido == 1).length;
+    percent = (taskMade / totalTask);
+
+  }
+
+  toggleTask(Task task, bool value) async {
+    setState(() {
+      if (value) {
+        task.concluido = 1;
+        taskMade++;
+      } else {
+        task.concluido = 0;
+        taskMade--;
+      }
+      percent = (taskMade / totalTask);
+    });
+
+    await DBHelperTask.atualizatarefa(task);
+    // await DBHelperTask.toggleTarefa(task.id!, value);
   }
 
   @override
   Widget build(BuildContext context) {
     String mes = widget.month.getNameMonth();
-    int totalTask = listTask.length;
+
     // int taskMade = Random().nextInt(listTask.length);
-    int taskMade = listTask.where((task) => task.concluido == 1).length;
-    double percent = (taskMade / totalTask);
 
     // startConfig(); Aqui dá ruim
-    
+
     return Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
@@ -82,8 +101,14 @@ class _DayDetailsState extends State<DayDetails> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: ProgressBar(progress: 0.8),
+              padding: const EdgeInsets.only(bottom: 20, right: 30.0, left: 30.0),
+              child: LinearProgressIndicator(
+                value: percent,
+                minHeight: 8,
+                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                color: Colors.brown,
+                backgroundColor: Colors.black54,
+              ),
             ),
             Column(
               children: List.generate(listTask.length, (index) {
@@ -95,18 +120,7 @@ class _DayDetailsState extends State<DayDetails> {
                         label: listTask[index].descricao,
                         isChecked: listTask[index].concluido == 1,
                         onChanged: (value) {
-                          setState(() {
-                            if(value!){
-                              listTask[index].concluido = 1;
-                              taskMade++;
-                              percent = (taskMade / totalTask);
-                            }else{
-                              listTask[index].concluido = 0;
-                              taskMade--;
-                              percent = (taskMade / totalTask);
-                            }
-                            // print("progress $taskMade $percent");
-                          });
+                          toggleTask(listTask[index], value!);
                         }),
                   ),
                 );
