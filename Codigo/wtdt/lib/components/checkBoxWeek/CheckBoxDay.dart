@@ -11,6 +11,7 @@ class CheckboxDay extends Checkbox {
 
   final bool isChecked;
   @override
+  // ignore: overridden_fields
   final Function(bool?) onChanged;
 
 

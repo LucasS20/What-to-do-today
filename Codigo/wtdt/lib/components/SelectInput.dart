@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const List<String> options = <String>['hoje', '1 semana', '2 semanas', '1 mês', '3 meses'];
+// const List<String> options = <String>['hoje', '1 semana', '2 semanas', '1 mês', '3 meses'];
+
+const Map<String, int> options = {'hoje': 0, '1 semana': 1, '2 semanas' : 2, '1 mês': 4, '3 meses': 12};
 
 class SelectInput extends StatefulWidget{
   const SelectInput({super.key, required this.value});
@@ -21,7 +23,7 @@ class _SelectInputState extends State<SelectInput>{
 
   _SelectInputState();
   final String label = "Recorrência";
-  String value = options.first;
+  String value = options['hoje'].toString();
   
   _saveData(String saveValue) async{
     final prefs = await SharedPreferences.getInstance();
@@ -46,12 +48,13 @@ class _SelectInputState extends State<SelectInput>{
         // This is called when the user selects an item.
         setState(() {
           value = select!;
+          print(value);
         });
         _saveData(select!);
 
       },
-      dropdownMenuEntries: options.map<DropdownMenuEntry<String>>((String value) {
-        return DropdownMenuEntry<String>(value: value, label: value);
+      dropdownMenuEntries: options.keys.map<DropdownMenuEntry<String>>((String key) {
+        return DropdownMenuEntry<String>(value: options[key].toString(), label: key);
       }).toList(),
     );
   }

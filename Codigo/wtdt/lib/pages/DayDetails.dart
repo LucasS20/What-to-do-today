@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:wtdt/components/CustomFloatingButtom.dart';
 import 'package:wtdt/components/Footer.dart';
-import 'package:wtdt/components/ProgressBar.dart';
 import 'package:wtdt/components/checkBoxWeek/CheckBoxDay.dart';
 import 'package:wtdt/db/DBHelperTask.dart';
+import 'package:wtdt/pages/Homepage.dart';
 import 'package:wtdt/utils/Month.dart';
 import 'package:wtdt/components/Header.dart';
 import 'package:wtdt/models/Task.dart';
@@ -77,63 +77,75 @@ class _DayDetailsState extends State<DayDetails> {
 
     // startConfig(); Aqui dá ruim
 
-    return Scaffold(
-      backgroundColor: Colors.brown[100],
-      appBar: AppBar(
-        toolbarHeight: 160,
-        elevation: 0,
+    return WillPopScope(
+
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
+        return false;
+      },
+      child: Scaffold(
         backgroundColor: Colors.brown[100],
-        title: const Header(firstPart: 'What to do', secondtPart: 'Today?'),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-            child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 5),
-              child: Text(
-                "${widget.day} de $mes",
-                style: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.brown),
+        appBar: AppBar(
+          toolbarHeight: 160,
+          elevation: 0,
+          backgroundColor: Colors.brown[100],
+          title: const Header(firstPart: 'What to do', secondtPart: 'Today?'),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+          child: Center(
+              child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 20, bottom: 5),
+                child: Text(
+                  "${widget.day} de $mes",
+                  style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.brown),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20, right: 30.0, left: 30.0),
-              child: LinearProgressIndicator(
-                value: percent,
-                minHeight: 8,
-                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                color: Colors.brown,
-                backgroundColor: Colors.black54,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20, right: 30.0, left: 30.0),
+                child: LinearProgressIndicator(
+                  value: percent,
+                  minHeight: 8,
+                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                  color: Colors.brown,
+                  backgroundColor: Colors.black54,
+                ),
               ),
-            ),
-            Column(
-              children: List.generate(listTask.length, (index) {
-                return SizedBox(
-                  width: 300,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: CheckboxDay(
-                        label: listTask[index].descricao,
-                        isChecked: listTask[index].concluido == 1,
-                        onChanged: (value) {
-                          toggleTask(listTask[index], value!);
-                        }),
-                  ),
-                );
-              }),
-            )
-          ],
-        )),
-      ),
-      floatingActionButton: const CustomFloatingButtom(),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.brown[800],
-        height: 70,
-        child: Footer(),
+              Column(
+                children: List.generate(listTask.length, (index) {
+                  return SizedBox(
+                    width: 300,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: CheckboxDay(
+                          label: listTask[index].descricao,
+                          isChecked: listTask[index].concluido == 1,
+                          onChanged: (value) {
+                            toggleTask(listTask[index], value!);
+                          }),
+                    ),
+                  );
+                }),
+              )
+            ],
+          )),
+        ),
+        floatingActionButton: const CustomFloatingButtom(),
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.brown[800],
+          height: 70,
+          child: Footer(),
+        ),
       ),
     );
   }

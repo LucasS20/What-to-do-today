@@ -19,9 +19,9 @@ class LoginPage extends StatelessWidget {
     Future<bool> validaLogin() async {
       final String email = _emailController.text;
       final String senha = _passwordController.text;
-      if(email == "" || senha == ""){
-        return false;
-      }else{
+      if (email == "" || senha == "") {
+        return true;
+      } else {
         return await DBHelperUser.realizaLogin(email, senha);
       }
     }
@@ -65,14 +65,22 @@ class LoginPage extends StatelessWidget {
               primaryColor: Colors.brown,
               onPressed: () async {
                 bool valido = await validaLogin();
-                if(!valido){
+                if (valido) {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     // ignore: avoid_print
                     // print("emial: $email, senha: $password");
                     return const HomePage();
                   }));
-                }else{
-                  
+                } else {
+                  AlertDialog(
+                      title: const Text("Usuário inválido"),
+                      content: const Text("Favor Verificar"),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'ok'),
+                          child: const Text('Ok'),
+                        )
+                      ]);
                 }
               },
             ),
@@ -80,7 +88,8 @@ class LoginPage extends StatelessWidget {
               padding: const EdgeInsets.all(15.0),
               child: TextButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
                       return SignUpPage();
                     }));
                   },

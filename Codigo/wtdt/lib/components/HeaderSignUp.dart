@@ -25,7 +25,7 @@ class HeaderSignUp extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.black45),
             ),
-            SizedBox(width: 16), // Espaço entre os Textos
+            const SizedBox(width: 16), // Espaço entre os Textos
             Text(
               secondtPart,
               style: const TextStyle(

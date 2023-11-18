@@ -1,7 +1,4 @@
 // ignore_for_file: file_names
-
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:wtdt/components/CustomButtom.dart';
 import 'package:wtdt/components/CustomInputForm.dart';
@@ -29,8 +26,7 @@ class SignUpPage extends StatelessWidget {
       senha: password
     );
     
-    int id = await DBHelperUser.adicionarUsuario(newUser);
-    print(id);
+    await DBHelperUser.adicionarUsuario(newUser);
   }
 
   @override
