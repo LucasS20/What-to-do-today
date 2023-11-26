@@ -10,7 +10,7 @@ class Footer extends StatelessWidget {
   void logout() async {
     // Limpar as informações de autenticação
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('authenticated');
+    prefs.remove('userId');
   }
 
   @override

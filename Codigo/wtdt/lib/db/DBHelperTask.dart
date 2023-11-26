@@ -13,8 +13,10 @@ class DBHelperTask {
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         descricao TEXT,
         data TEXT,
-        concluido Integer,
-        createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        concluido INTEGER,
+        user_id INTEGER,
+        createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES usuario(id) ON DELETE CASCADE
       )
       """);
   }
@@ -36,6 +38,7 @@ class DBHelperTask {
       'descricao': task.descricao,
       'data': task.data,
       'concluido': 0,
+      'user_id' : task.userId
     };
 
     debugPrint("dados salvos $dados");
@@ -46,15 +49,17 @@ class DBHelperTask {
   }
 
   static Future<void> adicionarTarefaRepetida(
-      String descricao, List<String> datas) async {
+      String descricao, List<String> datas, int userId) async {
     final db = await DBHelperTask.db();
     final Batch batch = db.batch();
 
+    // ignore: non_constant_identifier_names
     for (var srt_data in datas) {
       dynamic dados = {
         'descricao': descricao,
         'data': srt_data,
         'concluido': 0,
+        'user_id': userId
       };
       batch.insert(nomeTabela, dados);
     }
@@ -114,20 +119,22 @@ class DBHelperTask {
         'UPDATE $nomeTabela SET concluido = ? WHERE id = ?', [value, id]);
   }
 
-  static Future<Map<String, Map<String, dynamic>>> getData() async {
+  static Future<Map<String, Map<String, dynamic>>> getData(int userId) async {
     final db = await DBHelperTask.db();
     final Map<String, Map<String, dynamic>> data = {};
-    
+
     final result = await db.rawQuery(''' 
-      SELECT
-        data AS date,
-        COUNT(*) AS totalTask,
-        SUM(CASE WHEN concluido = 1 THEN 1 ELSE 0 END) AS completedTasks
-      FROM
-        $nomeTabela
-      GROUP BY
-        data
-     ''');
+    SELECT
+      data AS date,
+      COUNT(*) AS totalTask,
+      SUM(CASE WHEN concluido = 1 THEN 1 ELSE 0 END) AS completedTasks
+    FROM
+      $nomeTabela
+    WHERE
+      user_id = ?
+    GROUP BY
+      data
+  ''', [userId]);
 
     for (final row in result) {
       String key = row['date'] as String;
@@ -136,13 +143,13 @@ class DBHelperTask {
       // print('Total de Linhas: ${row['total_linhas']}');
       // print('Linhas Concluídas: ${row['linhas_concluidas']}');
     }
-     
+
     return data;
   }
 
   static Future<Map<String, dynamic>?> getInfosByDate(String date) async {
     final db = await DBHelperTask.db();
-    
+
     final result = await db.rawQuery(''' 
       SELECT
         data AS date,
@@ -154,11 +161,12 @@ class DBHelperTask {
         data = ?
      ''', [date]);
 
-    if(result.isEmpty){
+    if (result.isEmpty) {
       return null;
-    }else{
+    } else {
       debugPrint(result.toString());
       return result[0];
     }
   }
+
 }

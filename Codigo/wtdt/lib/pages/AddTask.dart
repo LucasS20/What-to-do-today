@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wtdt/components/CustomButtom.dart';
@@ -21,19 +21,25 @@ class _AddTaskState extends State<AddTask> {
   final TextEditingController _nameController = TextEditingController();
   final String value = "";
 
-  saveTask() async {
+  Future<bool> saveTask() async {
     final prefs = await SharedPreferences.getInstance();
 
     List<String> futureDays = [];
     final String description = _nameController.text;
     final String frequency = prefs.getString("selectValue") ?? "hoje";
     final List<String> listWeek = prefs.getStringList('weekDaysList') ?? [];
+    final userId = prefs.getInt('userId');
+    if(userId == null) {
+      return false;
+    }
 
     futureDays
         .addAll(generateListOfFutureDates(listWeek, int.parse(frequency)));
 
     prefs.setStringList('weekDaysList', []);
-    DBHelperTask.adicionarTarefaRepetida(description, futureDays);
+    DBHelperTask.adicionarTarefaRepetida(description, futureDays, userId);
+
+    return true;
   }
 
   List<String> generateListOfFutureDates(List<String> listWeek, int frequency) {
@@ -122,18 +128,22 @@ class _AddTaskState extends State<AddTask> {
               CustomButtom(
                   textLabel: "Criar",
                   primaryColor: Colors.brown,
-                  onPressed: () {
-                    saveTask();
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return const CustomDialog(
-                          title: "Tarefa Adicionada com sucesso",
-                          body: "",
-                        );
-                      },
-                    );
-                    navigateToHomePage(context);
+                  onPressed: () async {
+                    bool sucess = await saveTask();
+                    if(sucess){
+                      navigateToHomePage(context);
+                    }else{
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const CustomDialog(
+                            title: "Tarefa Adicionada com sucesso",
+                            body: "",
+                          );
+                        },
+                      );
+                    }
+                    
                   })
             ],
           ),

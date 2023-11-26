@@ -17,7 +17,7 @@ class MainApp extends StatelessWidget {
   // ignore: unused_element
   _isAuthenticated() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('authenticated') ?? false;
+    return prefs.getInt('userId');
   }
 
   @override
@@ -38,8 +38,8 @@ class MainApp extends StatelessWidget {
               } else if (snapshot.hasError) {
                 return Text('Erro: ${snapshot.error}');
               } else {
-                bool result = snapshot.data as bool;
-                return result ? const HomePage() : const LoginPage();
+                int? result = snapshot.data as int?;
+                return result != null ? const HomePage() : const LoginPage();
               }
             }));
   }

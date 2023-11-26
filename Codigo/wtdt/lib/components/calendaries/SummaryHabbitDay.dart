@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, non_constant_identifier_names
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wtdt/components/calendaries/HabbitDayButton.dart';
 import 'package:wtdt/db/DBHelperTask.dart';
 import 'package:wtdt/utils/Month.dart';
@@ -29,7 +30,9 @@ class _SummaryHabbitDayState extends State<SummaryHabbitDay> {
   }
 
   Future<Map<String, Map<String, dynamic>>> getDatas() async {
-    final data = await DBHelperTask.getData();
+    final prefs = await SharedPreferences.getInstance();
+    final userId = prefs.getInt('userId') ?? -1;
+    final data = await DBHelperTask.getData(userId);
     return data;
   }
 

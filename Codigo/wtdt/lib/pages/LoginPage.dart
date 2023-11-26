@@ -29,9 +29,12 @@ class LoginPage extends StatelessWidget {
       } else {
 
         final prefs = await SharedPreferences.getInstance();
-        bool authenticated = await DBHelperUser.realizaLogin(email, senha);
-        prefs.setBool('authenticated', authenticated);
-        return authenticated;
+        int? userId = await DBHelperUser.realizaLogin(email, senha);
+        if(userId != null){
+          prefs.setInt('userId', userId);
+          return true;
+        }
+        return false;
 
       }
     }

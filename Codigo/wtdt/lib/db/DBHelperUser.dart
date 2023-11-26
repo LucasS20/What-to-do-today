@@ -2,8 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:wtdt/models/User.dart';
 
-class DBHelperUser{
-
+class DBHelperUser {
   static const String nomeTabela = "usuario";
 
   static Future<void> criaTabela(sql.Database database) async {
@@ -46,8 +45,7 @@ class DBHelperUser{
     return db.query(nomeTabela, where: "id = ?", whereArgs: [id], limit: 1);
   }
 
-  static Future<int> atualizaUsuario(
-      User user) async {
+  static Future<int> atualizaUsuario(User user) async {
     final db = await DBHelperUser.db();
 
     final dados = {
@@ -57,8 +55,8 @@ class DBHelperUser{
       'createdAt': DateTime.now().toString()
     };
 
-    final result =
-    await db.update(nomeTabela, dados, where: "id = ?", whereArgs: [user.id]);
+    final result = await db
+        .update(nomeTabela, dados, where: "id = ?", whereArgs: [user.id]);
     return result;
   }
 
@@ -71,11 +69,16 @@ class DBHelperUser{
     }
   }
 
-  static Future<bool> realizaLogin(String email, String senha) async{
-
+  static Future<int?> realizaLogin(String email, String senha) async {
     final db = await DBHelperUser.db();
-    final result = await db.query(nomeTabela, where: "email = ? AND senha = ?", whereArgs: [email, senha], limit: 1);
-    return result.isEmpty;
-  } 
+    final result = await db.query(
+      nomeTabela,
+      columns: ['id'],
+      where: "email = ? AND senha = ?",
+      whereArgs: [email, senha],
+      limit: 1,
+    );
 
+    return result.isNotEmpty ? result[0]['id'] as int : null;
+  }
 }
