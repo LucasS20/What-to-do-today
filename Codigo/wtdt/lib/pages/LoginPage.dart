@@ -1,10 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, file_names, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wtdt/components/CustomButtom.dart';
 import 'package:wtdt/components/CustomInputForm.dart';
 import 'package:wtdt/components/CustomDialog.dart';
 import 'package:wtdt/components/CustomText.dart';
+import 'package:wtdt/components/Header.dart';
 import 'package:wtdt/db/DBHelperUser.dart';
 import 'package:wtdt/main.dart';
 import 'package:wtdt/pages/Homepage.dart';
@@ -23,14 +25,26 @@ class LoginPage extends StatelessWidget {
       final String senha = _passwordController.text;
       
       if (email == "" || senha == "") {
-        return false;
+        return true;
       } else {
-        return await DBHelperUser.realizaLogin(email, senha);
+
+        final prefs = await SharedPreferences.getInstance();
+        bool authenticated = await DBHelperUser.realizaLogin(email, senha);
+        prefs.setBool('authenticated', authenticated);
+        return authenticated;
+
       }
     }
 
     return Scaffold(
       backgroundColor: Colors.brown[100],
+      appBar: AppBar(
+          toolbarHeight: 160,
+          elevation: 0,
+          backgroundColor: Colors.brown[100],
+          title: const Header(firstPart: 'What to do', secondtPart: 'Today?'),
+          centerTitle: true,
+        ),
       body: Padding(
         padding: const EdgeInsets.only(top: 60),
         child: SingleChildScrollView(
@@ -103,6 +117,18 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
+       bottomNavigationBar: BottomAppBar(
+          color: Colors.brown[800],
+          height: 70,
+          child: const Row(
+            children: <Widget>[
+              SizedBox(width: 30,),
+              Icon(Icons.free_breakfast,
+                  color: Colors.white,
+                  size: 35),
+            ],
+          ),
+        ),
     );
 
     

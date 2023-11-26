@@ -1,10 +1,17 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wtdt/pages/LoginPage.dart';
 
 class Footer extends StatelessWidget {
   const Footer({Key? key}) : super(key: key);
+
+  void logout() async {
+    // Limpar as informações de autenticação
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('authenticated');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +23,7 @@ class Footer extends StatelessWidget {
         PopupMenuButton<String>(
           onSelected: (value) {
             if (value == 'logout') {
+              logout();
               navigateToLoginPage(context);
             }
           },

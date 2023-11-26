@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wtdt/components/Header.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wtdt/pages/LoginPage.dart';
-
-
+import 'package:wtdt/pages/Homepage.dart';
 
 void main() {
   runApp(const MainApp());
@@ -11,50 +10,37 @@ void main() {
 
 // ignore: must_be_immutable
 class MainApp extends StatelessWidget {
+  const MainApp({super.key});
 
   final String title = "What to do today?";
 
-  const MainApp({super.key});
+  // ignore: unused_element
+  _isAuthenticated() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('authenticated') ?? false;
+  }
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // localizationsDelegates: const [
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate
-      // ],
-      // supportedLocales: const [Locale('pt', 'BR')],
-      title: "What to do Today",
-      theme: ThemeData(
-        primaryColor: Colors.transparent,
-        secondaryHeaderColor: Colors.brown[200],
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 160,
-          elevation: 0,
-          backgroundColor: Colors.brown[100],
-          title: const Header(firstPart: 'What to do', secondtPart: 'Today?'),
-          centerTitle: true,
+        debugShowCheckedModeBanner: false,
+        title: "What to do Today",
+        theme: ThemeData(
+          primaryColor: Colors.transparent,
+          secondaryHeaderColor: Colors.brown[200],
         ),
-        body: const Center(
-          child: LoginPage(),
-        ),
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.brown[800],
-          height: 70,
-          child: const Row(
-            children: <Widget>[
-              SizedBox(width: 30,),
-              Icon(Icons.free_breakfast,
-                  color: Colors.white,
-                  size: 35),
-            ],
-          ),
-        ),
-      ),
-    );
+        home: FutureBuilder(
+            future: _isAuthenticated(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator( color: Colors.brown,);
+              } else if (snapshot.hasError) {
+                return Text('Erro: ${snapshot.error}');
+              } else {
+                bool result = snapshot.data as bool;
+                return result ? const HomePage() : const LoginPage();
+              }
+            }));
   }
 }
