@@ -25,7 +25,7 @@ class Footer extends StatelessWidget {
                 value: 'logout',
                 child: ListTile(
                   leading: Icon(Icons.exit_to_app),
-                  title: const Text('Logout'),
+                  title: Text('Logout'),
                 ),
               ),
             ];
