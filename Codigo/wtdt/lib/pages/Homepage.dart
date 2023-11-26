@@ -6,12 +6,11 @@ import 'package:wtdt/components/Footer.dart';
 import 'package:wtdt/components/Header.dart';
 import 'package:wtdt/components/calendaries/Calendaries.dart';
 
-class HomePage extends StatelessWidget{
-  const HomePage({super.key});
-
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
@@ -22,7 +21,7 @@ class HomePage extends StatelessWidget{
         centerTitle: true,
       ),
       body: const SingleChildScrollView(
-        child:  Center(
+        child: Center(
           child: Calendaries(),
         ),
       ),
@@ -30,8 +29,16 @@ class HomePage extends StatelessWidget{
       bottomNavigationBar: BottomAppBar(
         color: Colors.brown[800],
         height: 70,
-        child: Footer(),
+        child: const Footer(),
       ),
     );
   }
+}
+
+void navigateToHomePage(BuildContext context) {
+  Navigator.popUntil(context, (route) => route.isFirst);
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => const HomePage()),
+  );
 }

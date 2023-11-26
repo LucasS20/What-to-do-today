@@ -23,6 +23,7 @@ class _DayDetailsState extends State<DayDetails> {
 
   final int day;
   final Month month;
+  final today = DateTime.now();
   List<Task> listTask = <Task>[];
 
   int totalTask = 0;
@@ -36,7 +37,7 @@ class _DayDetailsState extends State<DayDetails> {
   }
 
   startConfig() async {
-    final int year = DateTime.now().year;
+    final int year = today.year;
     final datefilter = "$year-${month.numberOfMonth}-$day";
     final data = await DBHelperTask.retornatarefaPeloData(datefilter);
 
@@ -54,6 +55,10 @@ class _DayDetailsState extends State<DayDetails> {
   }
 
   toggleTask(Task task, bool value) async {
+    
+    if(day != today.day && month.numberOfMonth != today.month){
+      return;
+    }
     setState(() {
       if (value) {
         task.concluido = 1;
@@ -80,13 +85,8 @@ class _DayDetailsState extends State<DayDetails> {
     return WillPopScope(
 
       onWillPop: () async {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomePage(),
-          ),
-        );
-        return false;
+        navigateToHomePage(context);
+        return true;
       },
       child: Scaffold(
         backgroundColor: Colors.brown[100],
@@ -128,6 +128,7 @@ class _DayDetailsState extends State<DayDetails> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 20),
                       child: CheckboxDay(
+                          
                           label: listTask[index].descricao,
                           isChecked: listTask[index].concluido == 1,
                           onChanged: (value) {
@@ -144,7 +145,7 @@ class _DayDetailsState extends State<DayDetails> {
         bottomNavigationBar: BottomAppBar(
           color: Colors.brown[800],
           height: 70,
-          child: Footer(),
+          child: const Footer(),
         ),
       ),
     );

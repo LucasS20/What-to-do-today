@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wtdt/components/CustomButtom.dart';
+import 'package:wtdt/components/CustomDialog.dart';
 import 'package:wtdt/components/checkBoxWeek/CheckBoxWeek.dart';
 import 'package:wtdt/components/Header.dart';
 import 'package:wtdt/components/SelectInput.dart';
 import 'package:wtdt/db/DBHelperTask.dart';
 import 'package:wtdt/pages/Homepage.dart';
-
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -29,7 +29,8 @@ class _AddTaskState extends State<AddTask> {
     final String frequency = prefs.getString("selectValue") ?? "hoje";
     final List<String> listWeek = prefs.getStringList('weekDaysList') ?? [];
 
-    futureDays.addAll(generateListOfFutureDates(listWeek, int.parse(frequency)));
+    futureDays
+        .addAll(generateListOfFutureDates(listWeek, int.parse(frequency)));
 
     prefs.setStringList('weekDaysList', []);
     DBHelperTask.adicionarTarefaRepetida(description, futureDays);
@@ -38,34 +39,27 @@ class _AddTaskState extends State<AddTask> {
   List<String> generateListOfFutureDates(List<String> listWeek, int frequency) {
     final DateTime today = DateTime.now();
     List<String> futureDays = [];
-    int daysToSum =0;
-    if(frequency == 0){
+    int daysToSum = 0;
+    if (frequency == 0) {
       futureDays.add(dateToStr(DateTime.now()));
-    }else{
+    } else {
       for (var dayWeek in listWeek) {
-
         int temp = int.parse(dayWeek);
 
         for (int i = 0; i < frequency; i++) {
           if (temp > today.weekday) {
-      
             daysToSum = (temp - today.weekday) + (7 * i);
-      
           } else if (temp < today.weekday) {
-            
-            daysToSum = (7 - today.weekday +  temp) + (7 * i);
-
+            daysToSum = (7 - today.weekday + temp) + (7 * i);
           } else {
             daysToSum = (7 + (7 * i));
           }
 
           futureDays.add(dateToStr(today.add(Duration(days: daysToSum))));
         }
-
-
       }
     }
-    
+
     return futureDays;
   }
 
@@ -79,80 +73,82 @@ class _AddTaskState extends State<AddTask> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomePage(),
-          ),
-        );
-        return false;
-      },
-      child: Scaffold(
+    return Scaffold(
+      backgroundColor: Colors.brown[100],
+      appBar: AppBar(
+        toolbarHeight: 160,
+        elevation: 0,
         backgroundColor: Colors.brown[100],
-        appBar: AppBar(
-          toolbarHeight: 160,
-          elevation: 0,
-          backgroundColor: Colors.brown[100],
-          title: const Header(firstPart: 'Cadastrar', secondtPart: 'Afazer'),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: SizedBox(
-                    width: 340,
-                    child: TextField(
-                      controller: _nameController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        focusColor: Colors.amberAccent,
-                        labelText: 'Compremetimento',
-                        hintText: 'Qual é o seu comprometimento?',
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: SizedBox(
-                    width: 440,
-                    child: Column(
-                      children: <Widget>[SelectInput(value: value)],
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Column(
-                    children: <Widget>[CheckboxWeek()],
-                  ),
-                ),
-                CustomButtom(
-                    textLabel: "Criar",
-                    primaryColor: Colors.brown,
-                    onPressed: () {
-                      saveTask();
-                    })
-              ],
-            ),
-          ),
-        ),
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.brown[800],
-          height: 70,
-          child: const Row(
+        title: const Header(firstPart: 'Cadastrar', secondtPart: 'Afazer'),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
             children: <Widget>[
-              SizedBox(
-                width: 30,
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: SizedBox(
+                  width: 340,
+                  child: TextField(
+                    controller: _nameController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.brown),
+                      ),
+                      labelText: 'Comprometimento',
+                      labelStyle: TextStyle(color: Colors.brown),
+                      hintText: 'Qual é o seu comprometimento?',
+                    ),
+                  ),
+                ),
               ),
-              Icon(Icons.free_breakfast, color: Colors.white, size: 35),
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: SizedBox(
+                  width: 440,
+                  child: Column(
+                    children: <Widget>[SelectInput(value: value)],
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(15),
+                child: Column(
+                  children: <Widget>[CheckboxWeek()],
+                ),
+              ),
+              CustomButtom(
+                  textLabel: "Criar",
+                  primaryColor: Colors.brown,
+                  onPressed: () {
+                    saveTask();
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const CustomDialog(
+                          title: "Tarefa Adicionada com sucesso",
+                          body: "",
+                        );
+                      },
+                    );
+                    navigateToHomePage(context);
+                  })
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.brown[800],
+        height: 70,
+        child: const Row(
+          children: <Widget>[
+            SizedBox(
+              width: 30,
+            ),
+            Icon(Icons.free_breakfast, color: Colors.white, size: 35),
+          ],
         ),
       ),
     );

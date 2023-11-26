@@ -37,6 +37,7 @@ class _SelectInputState extends State<SelectInput>{
       label: Text(label, 
         style: const TextStyle(
           fontSize: 18,
+          color: Colors.brown,
         ),),
       hintText: "Com qual recorrência?",
       inputDecorationTheme: const InputDecorationTheme(

@@ -26,7 +26,8 @@ class _HabbitDayButtonState extends State<HabbitDayButton> {
   final DateTime today = DateTime.now();
   final int day;
   final Month month;
-
+  
+  int totalTask = 0;
   Map<String, Map<String, dynamic>> bigData;
   int progress=900;
   
@@ -42,15 +43,20 @@ class _HabbitDayButtonState extends State<HabbitDayButton> {
     if(infos != null){
       InfoDate infoDate = InfoDate.fromMap(infos);
       setState(() {
+        totalTask = infoDate.totalTask;
         final result = infoDate.completedTasks / infoDate.totalTask;
         if(result == 1){
           progress = 200;
-        }else{
+        }else if(result == 0){
+          progress = 700;
+        } else{
           int temp = (result * 10).toInt();
           progress = 1000 - (temp * 100);
         }
       });
+      
     }
+   
   }
 
   
@@ -85,7 +91,7 @@ class _HabbitDayButtonState extends State<HabbitDayButton> {
       },
         
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.brown[intensityColor],
+          backgroundColor: totalTask != 0 ? Colors.brown[intensityColor] : Colors.black38 ,
           side: BorderSide(color: Colors.white, width: strokeBorder),
 
           // padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
