@@ -9,19 +9,24 @@ class AwsService{
     return CognitoUserPool(poolID, clientID);
   }
 
-  adicionaPoolUsuario(String email, String senha) async {
+  adicionaPoolUsuario(String username, String senha, String email) async {
 
     final userPool = retornaPool();
 
     var data;
 
+    final userAttributes = [
+      AttributeArg(name: 'email', value: email)
+    ];
+
     try{
 
       data = await userPool.signUp(
-        email, 
+        username, 
         senha, 
-        userAttributes: List.empty()
+        userAttributes: userAttributes
         );
+
     }catch(e){
       print(e);
     }

@@ -7,6 +7,7 @@ import 'package:wtdt/components/Header.dart';
 import 'package:wtdt/db/DBHelperUser.dart';
 import 'package:wtdt/main.dart';
 import 'package:wtdt/models/User.dart';
+import 'package:wtdt/utils/AwsService.dart';
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({super.key});
@@ -19,6 +20,10 @@ class SignUpPage extends StatelessWidget {
     final String name = _nameController.text;
     final String email = _emailController.text;
     final String password = _passwordController.text;
+
+    final AwsService service = AwsService();
+
+    service.adicionaPoolUsuario(name, password, email);
 
     final User newUser = User(
       nome: name,
