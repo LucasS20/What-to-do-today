@@ -17,9 +17,13 @@ class SignUpPage extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
 
   saveUser() async {
-    final String name = _nameController.text;
+    String name = _nameController.text;
     final String email = _emailController.text;
     final String password = _passwordController.text;
+
+    name = name.replaceAll(" ","");
+
+    print(name);
 
     final AwsService service = AwsService();
 

@@ -11,6 +11,7 @@ import 'package:wtdt/db/DBHelperUser.dart';
 import 'package:wtdt/main.dart';
 import 'package:wtdt/pages/Homepage.dart';
 import 'package:wtdt/pages/SignUpPage.dart';
+import 'package:wtdt/utils/AwsService.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -23,6 +24,10 @@ class LoginPage extends StatelessWidget {
     Future<bool> validaLogin() async {
       final String email = _emailController.text;
       final String senha = _passwordController.text;
+
+       AwsService service = AwsService();
+
+      service.confirmaLoginUsuario(email, senha);
       
       if (email == "" || senha == "") {
         return true;
@@ -35,8 +40,9 @@ class LoginPage extends StatelessWidget {
           return true;
         }
         return false;
-
       }
+
+
     }
 
     return Scaffold(
@@ -58,7 +64,7 @@ class LoginPage extends StatelessWidget {
               const Row(children: [
                 Padding(
                     padding: EdgeInsets.fromLTRB(72.0, 0.0, 0.0, 8.0),
-                    child: CustomText(textLabel: "E-mail", size: 20)),
+                    child: CustomText(textLabel: "Username", size: 20)),
               ]),
               Padding(
                   padding: const EdgeInsets.fromLTRB(64.0, 0.0, 64.0, 32.0),
@@ -87,6 +93,7 @@ class LoginPage extends StatelessWidget {
                 primaryColor: Colors.brown,
                 onPressed: () async {
                   bool valido = await validaLogin();
+
                   if (valido) {
                     navigateToHomePage(context);
                   } else {
